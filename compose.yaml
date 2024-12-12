@@ -131,7 +131,8 @@ services:
       - "/home/sasbadi-ubuntu/Pictures:/go/src/github.com/photoprism/photoprism/storage/originals/pictures"
       - "/home/sasbadi-ubuntu/Videos:/go/src/github.com/photoprism/photoprism/storage/originals/videos"
       - "./storage:/go/src/github.com/photoprism/photoprism/storage/"
-      - "/mnt/media/usb:/go/src/github.com/photoprism/photoprism/storage/import"
+      - "/media/sasbadi-ubuntu:/go/src/github.com/photoprism/photoprism/storage/import"
+      - "/mnt/SASBADI-SERVER/_pa/LEE ENGONLINE:/go/src/github.com/photoprism/photoprism/storage/originals/pictures/SASBADI-SERVER/LEE ENGONLINE"
 
   ## MariaDB (Database Server)
   ## Docs: https://mariadb.com/docs/reference/

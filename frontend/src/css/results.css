@@ -555,3 +555,21 @@ body.chrome #photoprism .search-results .result {
         margin-top: 100%;
     }
 }
+
+#photoprism .image-detail i {
+    font-size: 14px;
+    display: inline-block;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-family: Material Icons;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: text-bottom;
+    white-space: nowrap;
+}
+
+#photoprism .image-detail .image-container {
+    height: 720px;
+}

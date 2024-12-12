@@ -43,6 +43,7 @@ import Help from "page/help.vue";
 import Connect from "page/connect.vue";
 import { $gettext } from "common/vm";
 import { config, session } from "./session";
+import PhotoDetail from "page/photo-detail.vue";
 
 const c = window.__CONFIG__;
 const siteTitle = c.siteTitle ? c.siteTitle : c.name;
@@ -58,6 +59,12 @@ export default [
     path: "/about",
     component: About,
     meta: { title: $gettext("About"), auth: false },
+  },
+  {
+    name: "about-me",
+    path: "/about-me",
+    component: About,
+    meta: { title: $gettext("About Me"), auth: false },
   },
   {
     name: "license",
@@ -133,11 +140,11 @@ export default [
     meta: { title: siteTitle, icon: true, auth: true },
     beforeEnter: (to, from, next) => {
       if (session.loginRequired()) {
-        next({ name: "login" });
+        next({ name: "login" });  //Users are redirected to login if they're not logged in.
       } else if (config.deny("photos", "search")) {
-        next({ name: "albums" });
+        next({ name: "albums" });  //Users are redirected to albums if they don't have permission for the browse route.
       } else {
-        next();
+        next(); //Otherwise, they are allowed to proceed to the browse route.
       }
     },
   },
@@ -465,5 +472,12 @@ export default [
   {
     path: "*",
     redirect: "/albums",
+  },
+  {
+    name: "photo-detail",
+    path: "/photo-detail", //http://10.0.0.239:2342/library/photo-detail?uid=psnc5wd0jz7l4klv
+    component: PhotoDetail,
+    meta: { title: $gettext("Photo Detail"), auth: true },
+    props: { staticFilter: { photo: "true" } },
   },
 ];

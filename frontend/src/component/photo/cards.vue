@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs fluid class="pa-2 p-photos p-photo-cards">
+  <v-container grid-list-xs fluid class="pa-2 p-photos p-photo-cards start-cards-vue">
     <template v-if="photos.length === 0">
       <v-alert :value="true" color="secondary-dark" :icon="isSharedView ? 'image_not_supported' : 'lightbulb_outline'" class="no-results ma-2 opacity-70" outline>
         <h3 v-if="filter.order === 'edited'" class="body-2 ma-0 pa-0">
@@ -24,15 +24,25 @@
         <div v-if="index < firstVisibleElementIndex || index > lastVisibileElementIndex" :data-uid="photo.UID" class="card result placeholder">
           <div class="card darken-1 image" />
           <div v-if="photo.Quality < 3 && context === 'review'" style="width: 100%; height: 34px" />
-          <div class="pa-3 card-details">
+          <div class="pa-3 card-details test3">
             <div>
               <h3 class="body-2 mb-2" :title="photo.Title">
                 {{ photo.Title | truncate(80) }}
               </h3>
+              <div class="caption mb-2">
+                <button @click.exact="copyText(photo.UID, 'Url')">
+                  <i>vpn_key</i>
+                  {{ photo.UID }}
+                </button>
+              </div>
               <div v-if="photo.Description" class="caption mb-2">
                 {{ photo.Description }}
               </div>
               <div class="caption">
+                <button @click.exact="copyText(photo.Path, 'Path')">
+                  <i>folder</i>
+                  {{ photo.Path }}
+                </button>
                 <i />
                 {{ photo.getDateString(true) }}
                 <br />
@@ -139,19 +149,29 @@
             </v-layout>
           </v-card-actions>
 
-          <div class="pa-3 card-details">
+          <div class="pa-3 card-details test4">
             <div>
               <h3 class="body-2 mb-2" :title="photo.Title">
                 <button class="action-title-edit" :data-uid="photo.UID" @click.exact="isSharedView ? openPhoto(index) : editPhoto(index)">
                   {{ photo.Title | truncate(80) }}
                 </button>
               </h3>
+              <div class="caption mb-2">
+                <button @click.exact="copyText(photo.UID, 'Url')">
+                  <i>vpn_key</i>
+                  {{ photo.UID }}
+                </button>
+              </div>
               <div v-if="photo.Description" class="caption mb-2" :title="$gettext('Description')">
                 <button @click.exact="editPhoto(index)">
                   {{ photo.Description }}
                 </button>
               </div>
               <div class="caption">
+                <button @click.exact="copyText(photo.Path, 'Path')">
+                  <i>folder</i>
+                  {{ photo.Path }}
+                </button>
                 <button class="action-open-date" :data-uid="photo.UID" @click.exact="openDate(index)">
                   <i :title="$gettext('Taken')"> date_range </i>
                   {{ photo.getDateString(true) }}
@@ -209,6 +229,7 @@ import Notify from "common/notify";
 import { Input, InputInvalid, ClickShort, ClickLong } from "common/input";
 import { virtualizationTools } from "common/virtualization-tools";
 import IconLivePhoto from "component/icon/live-photo.vue";
+import useClipboard from 'vue-clipboard3'
 
 export default {
   name: "PPhotoCards",
@@ -269,6 +290,10 @@ export default {
       lastVisibileElementIndex: 0,
       visibleElementIndices: new Set(),
     };
+  },
+  setup() {
+    const { toClipboard } = useClipboard(); // Import `toClipboard` from vue-clipboard3
+    return { toClipboard };
   },
   watch: {
     photos: {
@@ -425,6 +450,24 @@ export default {
        * force an update to fix that.
        */
       this.$forceUpdate();
+    },
+    async copyText(text, condition) {
+      var newText;
+      switch(condition) {
+        case 'Url':
+          var uid = text;
+          newText = `http://10.0.0.239:2342/library/photo-detail?uid=` + uid;
+          break;
+        default:
+          newText = text;
+      }
+
+      try {
+        await this.toClipboard(newText);
+        alert("Copied to clipboard: " + newText);
+      } catch (e) {
+        console.error("Failed to copy text:", e);
+      }
     },
   },
 };

@@ -120,6 +120,7 @@ export class Photo extends RestModel {
       Name: "",
       OriginalName: "",
       Title: "",
+      Title2: "",
       TitleSrc: "",
       Description: "",
       DescriptionSrc: "",
@@ -359,8 +360,16 @@ export class Photo extends RestModel {
     return this.Title;
   }
 
+  getEntityName() {
+    return this.Title2;
+  }
+
   getTitle() {
     return this.Title;
+  }
+
+  getTitle() {
+    return this.Title2;
   }
 
   getGoogleMapsLink() {
@@ -1190,6 +1199,7 @@ export class Photo extends RestModel {
   }
 
   static getCollectionResource() {
+    console.log('load api url: /api/v1/photos/')
     return "photos";
   }
 
