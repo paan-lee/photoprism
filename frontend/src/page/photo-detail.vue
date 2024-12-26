@@ -13,15 +13,22 @@
         <div v-else-if="error" class="error">{{ error }}</div>
         <div v-else>
           <h2>{{ photo.Title || 'Untitled' }}</h2>
+          <span><i>image</i> {{ photo.Name }}.{{ photo.Files[0].FileType }}</span><br/>
           <button @click.exact="copyText(photo.UID, 'Url')" title="Photo ID">
             <i>vpn_key</i>
             {{ photo.UID }}
           </button>
           <br />
-          <button @click.exact="copyText(photo.Path, 'Path')" title="Image Path">
+          <button @click.exact="copyText(photo.Path, 'Path')" title="Image Path" style="text-align: left;">
             <i>folder</i>
-            {{ photo.Path }}
+            /{{ photo.Path }}/{{ photo.Name }}.{{ photo.Files[0].FileType }}
           </button>
+          <v-btn color="primary-button" depressed dark class="compact action-done hidden-xs-only" @click.exact="copyText(photo.Path, 'WindowsPath')">
+            <translate>Copy Image Path For Windows</translate>
+          </v-btn>
+          <v-btn color="primary-button" depressed dark class="compact action-done hidden-xs-only" @click.exact="copyText(photo.Path, 'MacPath')">
+            <translate>Copy Image Path For Mac</translate>
+          </v-btn>
           <br />
           <br />
           <div class="image-container">
@@ -97,6 +104,29 @@ export default {
           var uid = text;
           newText = `http://10.0.0.239:2342/library/photo-detail?uid=` + uid;
           break;
+
+        case 'Path':
+        case 'WindowsPath':
+          var path = text;
+
+          // Original path in Unix style
+          var unixPath = path.replace('pictures/SASBADI-SERVER', '//SASBADI-SERVER');
+
+          // Convert to Windows-style path
+          var windowsPath = unixPath.replace(/\//g, '\\');
+
+          newText = windowsPath;
+          break;
+
+        case 'MacPath':
+          var path = text;
+
+          // Original path in Unix style
+          var unixPath = path.replace('pictures/SASBADI-SERVER', 'smb://SASBADI-SERVER');
+
+          newText = unixPath;
+          break;
+
         default:
           newText = text;
       }

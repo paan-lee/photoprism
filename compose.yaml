@@ -114,6 +114,9 @@ services:
       # LIBVA_DRIVER_NAME: "i965"                    # For Intel architectures Haswell and older which do not support QSV yet but use VAAPI instead
       ## Run/install on first startup (options: update https gpu ffmpeg tensorflow davfs clitools clean):
       PHOTOPRISM_INIT: "https tensorflow"
+      ## Indexing:
+      PHOTOPRISM_WORKERS: "4"                        # maximum NUMBER of indexing workers, default depends on the number of physical cores
+      PHOTOPRISM_INDEX_SCHEDULE: "@every 3h"         # indexing SCHEDULE in cron format (e.g. "@every 3h" for every 3 hours; "" to disable)
     ## Share hardware devices with FFmpeg and TensorFlow (optional):
     # devices:
     #  - "/dev/dri:/dev/dri"                         # Intel QSV (Broadwell and later) or VAAPI (Haswell and earlier)
@@ -132,7 +135,7 @@ services:
       - "/home/sasbadi-ubuntu/Videos:/go/src/github.com/photoprism/photoprism/storage/originals/videos"
       - "./storage:/go/src/github.com/photoprism/photoprism/storage/"
       - "/media/sasbadi-ubuntu:/go/src/github.com/photoprism/photoprism/storage/import"
-      - "/mnt/SASBADI-SERVER/_pa/LEE ENGONLINE:/go/src/github.com/photoprism/photoprism/storage/originals/pictures/SASBADI-SERVER/LEE ENGONLINE"
+      - "/mnt/SASBADI-SERVER/_pa/LEE ENGONLINE:/go/src/github.com/photoprism/photoprism/storage/originals/pictures/SASBADI-SERVER/_pa/LEE ENGONLINE"
 
   ## MariaDB (Database Server)
   ## Docs: https://mariadb.com/docs/reference/

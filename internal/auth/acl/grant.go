@@ -122,6 +122,8 @@ var GrantDefaults = Roles{
 	RoleGuest:   GrantReactShared,
 	RoleVisitor: GrantViewShared,
 	RoleClient:  GrantFullAccess,
+	RoleUser:    GrantFullAccess,
+	RoleViewer:  GrantFullAccess,
 }
 
 // Allow checks if this Grant includes the specified Permission.

@@ -2283,7 +2283,7 @@ msgstr "Skop"
 #: src/page/albums.vue:92 src/page/labels.vue:71 src/page/library/errors.vue:59
 #: src/page/people/recognized.vue:76 src/page/places.vue:46
 msgid "Search"
-msgstr "Gelintar"
+msgstr "Carian"
 
 #: src/page/settings/general.vue:498
 msgid "Search and display photos on a map."

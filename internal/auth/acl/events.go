@@ -9,10 +9,14 @@ var Events = ACL{
 		RoleAdmin:   GrantFullAccess,
 		RoleGuest:   GrantSubscribeOwn,
 		RoleVisitor: GrantSubscribeOwn,
+		RoleUser:    GrantSubscribeOwn,
+		RoleViewer:  GrantSubscribeOwn,
 	},
 	ChannelSession: Roles{
 		RoleAdmin:   GrantFullAccess,
 		RoleGuest:   GrantSubscribeOwn,
 		RoleVisitor: GrantSubscribeOwn,
+		RoleUser:    GrantSubscribeOwn,
+		RoleViewer:  GrantSubscribeOwn,
 	},
 }

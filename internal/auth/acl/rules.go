@@ -47,6 +47,8 @@ var Rules = ACL{
 	ResourceLabels: Roles{
 		RoleAdmin:  GrantFullAccess,
 		RoleClient: GrantFullAccess,
+		RoleUser:   GrantFullAccess,
+		RoleViewer: GrantFullAccess,
 	},
 	ResourceConfig: Roles{
 		RoleAdmin:   GrantFullAccess,
@@ -67,8 +69,10 @@ var Rules = ACL{
 		RoleGuest: GrantConfigureOwn,
 	},
 	ResourcePassword: Roles{
-		RoleAdmin: GrantFullAccess,
-		RoleGuest: GrantUpdateOwn,
+		RoleAdmin:  GrantFullAccess,
+		RoleGuest:  GrantUpdateOwn,
+		RoleUser:   GrantUpdateOwn,
+		RoleViewer: GrantUpdateOwn,
 	},
 	ResourceUsers: Roles{
 		RoleAdmin:  GrantAll,

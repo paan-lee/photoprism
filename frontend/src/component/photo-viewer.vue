@@ -65,8 +65,15 @@
 </button>
 
         <div class="pswp__caption" @click="onPlay">
-          <div class="pswp__caption__center"></div>
+          <span class="pswp__caption__center"></span><br/>
+          <span class="pswp__path__center">
+            <button @click.exact="copyText(item.UID, 'Url')" title="Photo ID">
+              <v-icon size="16" color="white">vpn_key</v-icon>
+              {{ item.UID }}
+            </button>
+          </span>
         </div>
+
       </div>
     </div>
     <div v-if="player.show" class="video-viewer" @click.stop.prevent="closePlayer" @keydown.esc.stop.prevent="closePlayer">
@@ -84,6 +91,7 @@ import Thumb from "model/thumb";
 import { Photo, DATE_FULL } from "model/photo";
 import Notify from "common/notify";
 import { DateTime } from "luxon";
+import useClipboard from 'vue-clipboard3'
 
 export default {
   name: "PPhotoViewer",
@@ -111,6 +119,10 @@ export default {
         height: 480,
       },
     };
+  },
+  setup() {
+    const { toClipboard } = useClipboard(); // Import `toClipboard` from vue-clipboard3
+    return { toClipboard };
   },
   created() {
     this.subscriptions["viewer.change"] = Event.subscribe("viewer.change", this.onChange);
@@ -265,6 +277,24 @@ export default {
       g.close(); // Close Gallery
 
       Event.publish("dialog.edit", { selection, album, index }); // Open Edit Dialog
+    }, 
+    async copyText(text, condition) {
+      var newText;
+      switch(condition) {
+        case 'Url':
+          var uid = text;
+          newText = `http://10.0.0.239:2342/library/photo-detail?uid=` + uid;
+          break;
+        default:
+          newText = text;
+      }
+
+      try {
+        await this.toClipboard(newText);
+        alert("Copied to clipboard: " + newText);
+      } catch (e) {
+        console.error("Failed to copy text:", e);
+      }
     },
   },
 };

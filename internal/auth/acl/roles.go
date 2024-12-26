@@ -9,6 +9,8 @@ var UserRoles = RoleStrings{
 	string(RoleGuest):   RoleGuest,
 	string(RoleVisitor): RoleVisitor,
 	string(RoleNone):    RoleNone,
+	string(RoleUser):    RoleUser,
+	string(RoleViewer):  RoleViewer,
 }
 
 // ClientRoles maps valid API client roles.
@@ -16,6 +18,8 @@ var ClientRoles = RoleStrings{
 	string(RoleAdmin):  RoleAdmin,
 	string(RoleClient): RoleClient,
 	string(RoleNone):   RoleNone,
+	string(RoleUser):   RoleUser,
+	string(RoleViewer): RoleViewer,
 }
 
 // Roles grants permissions to roles.
