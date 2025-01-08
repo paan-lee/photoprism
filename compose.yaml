@@ -52,9 +52,9 @@ services:
       PHOTOPRISM_OIDC_CLIENT: "photoprism-develop"
       PHOTOPRISM_OIDC_SECRET: "9d8351a0-ca01-4556-9c37-85eb634869b9"
       PHOTOPRISM_OIDC_PROVIDER: "Keycloak"
-      PHOTOPRISM_OIDC_REGISTER: "true"
-      PHOTOPRISM_OIDC_WEBDAV: "true"
-      PHOTOPRISM_DISABLE_OIDC: "false"
+      PHOTOPRISM_OIDC_REGISTER: "false"
+      PHOTOPRISM_OIDC_WEBDAV: "false"
+      PHOTOPRISM_DISABLE_OIDC: "true"
       ## LDAP Authentication (pre-configured for local tests):
       PHOTOPRISM_LDAP_URI: "ldap://dummy-ldap:389"
       PHOTOPRISM_LDAP_INSECURE: "true"

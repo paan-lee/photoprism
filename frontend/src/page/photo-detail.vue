@@ -13,7 +13,7 @@
         <div v-else-if="error" class="error">{{ error }}</div>
         <div v-else>
           <h2>{{ photo.Title || 'Untitled' }}</h2>
-          <span><i>image</i> {{ photo.Name }}.{{ photo.Files[0].FileType }}</span><br/>
+          <span><i>image</i> {{ getFileName(photo.Files[0].Name) }}</span><br/>
           <button @click.exact="copyText(photo.UID, 'Url')" title="Photo ID">
             <i>vpn_key</i>
             {{ photo.UID }}
@@ -21,12 +21,13 @@
           <br />
           <button @click.exact="copyText(photo.Path, 'Path')" title="Image Path" style="text-align: left;">
             <i>folder</i>
-            /{{ photo.Path }}/{{ photo.Name }}.{{ photo.Files[0].FileType }}
+            {{ getFilePath(photo.Files[0].Name) }}
           </button>
-          <v-btn color="primary-button" depressed dark class="compact action-done hidden-xs-only" @click.exact="copyText(photo.Path, 'WindowsPath')">
+          <br />
+          <v-btn v-if="showButton(photo.Path)" color="primary-button" depressed dark class="compact action-done hidden-xs-only" @click.exact="copyText(photo.Path, 'WindowsPath')">
             <translate>Copy Image Path For Windows</translate>
           </v-btn>
-          <v-btn color="primary-button" depressed dark class="compact action-done hidden-xs-only" @click.exact="copyText(photo.Path, 'MacPath')">
+          <v-btn v-if="showButton(photo.Path)" color="primary-button" depressed dark class="compact action-done hidden-xs-only" @click.exact="copyText(photo.Path, 'MacPath')">
             <translate>Copy Image Path For Mac</translate>
           </v-btn>
           <br />
@@ -99,6 +100,8 @@ export default {
     },
     async copyText(text, condition) {
       var newText;
+      var unixPath;
+
       switch(condition) {
         case 'Url':
           var uid = text;
@@ -108,12 +111,19 @@ export default {
         case 'Path':
         case 'WindowsPath':
           var path = text;
+          var windowsPath;
 
-          // Original path in Unix style
-          var unixPath = path.replace('pictures/SASBADI-SERVER', '//SASBADI-SERVER');
+          if (path.includes("pictures/SASBADI-SERVER")) {
 
-          // Convert to Windows-style path
-          var windowsPath = unixPath.replace(/\//g, '\\');
+            // Original path in Unix style
+            unixPath = path.replace('pictures/SASBADI-SERVER', '//SASBADI-SERVER');
+
+            // Convert to Windows-style path
+            windowsPath = unixPath.replace(/\//g, '\\');
+
+          } else {
+            windowsPath = path.replace('pictures/', '/home/sasbadi-ubuntu/Pictures/');
+          }
 
           newText = windowsPath;
           break;
@@ -121,8 +131,14 @@ export default {
         case 'MacPath':
           var path = text;
 
-          // Original path in Unix style
-          var unixPath = path.replace('pictures/SASBADI-SERVER', 'smb://SASBADI-SERVER');
+          if (path.includes("pictures/SASBADI-SERVER")) {
+
+            // Original path in Unix style
+            unixPath = path.replace('pictures/SASBADI-SERVER', 'smb://SASBADI-SERVER');
+
+          } else {
+            unixPath = path.replace('pictures/', '/home/sasbadi-ubuntu/Pictures/');
+          }
 
           newText = unixPath;
           break;
@@ -138,6 +154,29 @@ export default {
         console.error("Failed to copy text:", e);
       }
     },
+    getFilePath(text) {
+      var path = text;
+      var unixPath;
+
+      if (path.includes("pictures/SASBADI-SERVER")) {
+        unixPath = path.replace('pictures/SASBADI-SERVER', '//SASBADI-SERVER');
+      } else {
+        unixPath = path.replace('pictures/', '/home/sasbadi-ubuntu/Pictures/');
+      }
+      return unixPath;
+    },
+    getFileName(text) {
+      return text.split('/').pop();
+    },
+    showButton(text) {
+      var path = text;
+
+      if (path.includes("pictures/SASBADI-SERVER")) {
+        return true;
+      } else {
+        return false;
+      } 
+    }
   },
 };
 </script>

@@ -67,10 +67,9 @@
         <div class="pswp__caption" @click="onPlay">
           <span class="pswp__caption__center"></span><br/>
           <span class="pswp__path__center">
-            <button @click.exact="copyText(item.UID, 'Url')" title="Photo ID">
-              <v-icon size="16" color="white">vpn_key</v-icon>
-              {{ item.UID }}
-            </button>
+            <v-btn color="primary-button" small depressed dark class="btn-action hidden-xs-only" @click.exact="copyText(item.UID, 'Url')">
+                <translate>Copy Image Url</translate>
+            </v-btn>
           </span>
         </div>
 

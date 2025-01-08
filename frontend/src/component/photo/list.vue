@@ -64,7 +64,7 @@
                       <icon-live-photo />
                     </i>
                     <i v-if="photo.Type === 'animated'" class="action-animated" :title="$gettext('Animated')"> gif </i>
-                    <i v-if="photo.Type === 'vector'" class="action-vector" :title="$gettext('Vector')"> font_download </i>
+                    <i v-if="photo.Type === 'vector'" class="action-vector" :title="$gettext('Vector')" style="color: #ff0000;"> font_download </i>
                     <i v-if="photo.Type === 'video'" class="action-play" :title="$gettext('Video')"> play_arrow </i>
                   </button>
                 </div>

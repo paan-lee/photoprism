@@ -30,10 +30,9 @@
                 {{ photo.Title | truncate(80) }}
               </h3>
               <div class="caption mb-2">
-                <button @click.exact="copyText(photo.UID, 'Url')">
-                  <i>vpn_key</i>
-                  {{ photo.UID }}
-                </button>
+                <v-btn color="primary-button" small depressed dark class="btn-action hidden-xs-only" @click.exact="copyText(photo.UID, 'Url')">
+                  <translate>Copy Image Url</translate>
+                </v-btn>
               </div>
               <div v-if="photo.Description" class="caption mb-2">
                 {{ photo.Description }}
@@ -101,7 +100,7 @@
               </i>
               <i v-if="photo.Type === 'video'" class="action-play" :title="$gettext('Video')"> play_arrow </i>
               <i v-if="photo.Type === 'animated'" class="action-animated" :title="$gettext('Animated')"> gif </i>
-              <i v-if="photo.Type === 'vector'" class="action-vector" :title="$gettext('Vector')"> font_download </i>
+              <i v-if="photo.Type === 'vector'" class="action-vector" :title="$gettext('Vector')" style="color: #ff0000;"> font_download </i>
               <i v-if="photo.Type === 'image'" class="action-stack" :title="$gettext('Stack')"> burst_mode </i>
             </button>
 
@@ -157,10 +156,9 @@
                 </button>
               </h3>
               <div class="caption mb-2">
-                <button @click.exact="copyText(photo.UID, 'Url')">
-                  <i>vpn_key</i>
-                  {{ photo.UID }}
-                </button>
+                <v-btn color="primary-button" small depressed dark class="btn-action hidden-xs-only" @click.exact="copyText(photo.UID, 'Url')">
+                  <translate>Copy Image Url</translate>
+                </v-btn>
               </div>
               <div v-if="photo.Description" class="caption mb-2" :title="$gettext('Description')">
                 <button @click.exact="editPhoto(index)">
